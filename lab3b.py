@@ -1,12 +1,13 @@
 #!usr/bin/python
 
-import sys, string, argparse
+import sys, string
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("file_system")
-    args = parser.parse_args()
-    print args.file_system
+    if len(sys.argv) != 2:
+        print "Usage: python2 lab3b.py file_system"
+    else:
+        file_system = sys.argv[1]
+        print sys.argv[1]
 
 if __name__ == "__main__":
     main()
