@@ -2,6 +2,7 @@
 
 import sys, string
 
+<<<<<<< HEAD
 def test(file_system):
     print file_system
 
@@ -16,3 +17,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+
+
+
+def main():
+    print sys.argv[1]
+
+
+main()
+>>>>>>> 4d4d63517ac6e972a5f5eecdba94afa68a2c592c
