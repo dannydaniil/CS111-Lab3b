@@ -1,8 +1,12 @@
 #!usr/bin/python
 
-import sys, string,argparse
+import sys, string
 
-parser = argparse.ArgumentParser()
-parser.add_argument("file_system")
-args = parser.parse_args()
-print args.file_system
+
+
+
+def main():
+    print sys.argv[1]
+
+
+main()
