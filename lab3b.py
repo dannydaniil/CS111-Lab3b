@@ -36,7 +36,6 @@ def main():
         fs_csv = sys.argv[1]
         print fs_csv
     lists = parse_csv(fs_csv)
-    print lists
 
 
 if __name__ == "__main__":
