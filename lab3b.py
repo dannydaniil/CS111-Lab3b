@@ -26,12 +26,10 @@ def parse_csv(fs_csv):
     return lists
 
 def main():
-    file_system = ""
     if len(sys.argv) != 2:
         print >> sys.stderr, "Usage: python2 lab3b.py fs_report.csv"
         sys.exit(1)
-    else:
-        fs_csv = sys.argv[1]
+    fs_csv = sys.argv[1]
     lists = parse_csv(fs_csv)
 
 if __name__ == "__main__":
