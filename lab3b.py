@@ -19,7 +19,7 @@ def parse_csv(fs_csv):
             try:
                 index = indices[summary_line[0]]
             except KeyError:
-                print >> sys.stderr, "{} {}".format("Error: Invalid first entry:",
+                print >> sys.stderr, "{0} {1}".format("Error: Invalid first entry:",
                         summary_line[0])
                 sys.exit(1)
             lists[index].append(summary_line)
