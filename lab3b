@@ -1,3 +1,8 @@
 #!/bin/sh
 
+if [ "$#" -ne 1 ]
+then
+    echo "Usage: $0 FILE_SYSTEM" >&2
+    exit 1
+fi
 python2 lab3b.py $1
