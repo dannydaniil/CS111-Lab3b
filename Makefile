@@ -7,8 +7,8 @@ CC = python
 default:  lab3a
 
 lab3a:
-	$(CC) lab3b.py
-
+	$(CC) lab3b.pym
+m
 clean:
 	rm -rf report.csv
 

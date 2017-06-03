@@ -2,15 +2,18 @@
 
 import sys, string
 
-def main():
-    print sys.argv[1]
+def test(file_system):
+    print file_system
+
 
 def main():
+    file_system = ""
     if len(sys.argv) != 2:
-        print "Usage: python2 lab3b.py file_system"
+        print >> sys.stderr, "Usage: python2 lab3b.py file_system"
     else:
         file_system = sys.argv[1]
-        print sys.argv[1]
+        print file_system
+    test(file_system)
 
 if __name__ == "__main__":
     main()
