@@ -186,6 +186,15 @@ def check_inode_allocation(lists):
         elif usage[i] > 1:
             print "ALLOCATED INODE {0} ON FREELIST".format(i)
 
+def check_link_count(lists):
+    usage = [0 for i in range(int(lists[0][0][2]) + 1)]
+    for element in lists[5]:
+        usage[int(element[3])] += 1
+    for element in lists[4]:
+        if usage[int(element[1])] != int(element[6]):
+            print "INODE {0} HAS {1} LINKS BUT LINKCOUNT IS {2}".format(element[1], usage[int(element[1])], element[6])
+        
+
 def main():
     if len(sys.argv) != 2:
         print >> sys.stderr, "Usage: python2 lab3b.py fs_report.csv"
@@ -195,6 +204,7 @@ def main():
     reserved = check_invalid_blocks(lists)
     check_allocation(lists, reserved)
     check_inode_allocation(lists)
+    check_link_count(lists)
 
 if __name__ == "__main__":
     main()
