@@ -92,11 +92,25 @@ def check_invalid_blocks(lists):
     return reserved_blocks
 
 def check_allocation(lists, reserved):
+    dict = {
+        0: "BLOCK",
+        1: "INDIRECT BLOCK",
+        2: "DOUBLE INDIRECT BLOCK",
+        3: "TRIPPLE INDIRECT BLOCK"
+    }
+
+    indirection_offset = {
+        1: 12,
+        2: 268,
+        3: 65804
+    }
+
     unreferenced = range(1, int(lists[0][0][1]))
     for element in reserved:
         unreferenced.remove(element)
     free = []
-
+    usage = [[0] for i in range(int(lists[0][0][1]))]
+        
     for element in lists[2]:
         unreferenced.remove(int(element[1]))
         free.append(int(element[1]))
@@ -108,11 +122,34 @@ def check_allocation(lists, reserved):
                 print "ALLOCATED BLOCK {0} ON FREELIST".format(element[i])
             else:
                 unreferenced.remove(int(element[i]))
+            usage[int(element[i])][0] += 1
+            if i < 24:
+                indirection = 0
+                offset = i - 12
+            else:
+                indirection = i - 23
+                offset = indirection_offset[indirection]
+            usage[int(element[i])].append({
+                    "indirection": indirection,
+                    "block_num": int(element[i]),
+                    "inode_num": int(element[1]),
+                    "offset": offset})
     for element in lists[6]:
         if int(element[5]) in free:
             print "ALLOCATED BLOCK {0} ON FREELIST".format(element[5])
         else:
             unreferenced.remove(int(element[5]))
+        usage[int(element[5])][0] += 1
+        usage[int(element[5])].append({
+                "indirection": int(element[2]),
+                "block_num": int(element[5]),
+                "inode_num": int(element[1]),
+                "offset": int(element[3])})
+    for element in usage:
+        if element[0] > 1:
+            for entry in range(1, len(element)):
+                print "DUPLICATE {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[element[entry]["indirection"]], element[entry]["block_num"],
+                        element[entry]["inode_num"], element[entry]["offset"])
     for element in unreferenced:
         print "UNREFERENCED BLOCK {0}".format(element)
 
