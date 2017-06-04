@@ -165,6 +165,20 @@ def check_allocation(lists, reserved):
     for element in unreferenced:
         print "UNREFERENCED BLOCK {0}".format(element)
 
+def check_inode_allocation(lists):
+    usage = [0 for i in range(int(lists[0][0][2]) + 1)]
+    for i in range(int(lists[0][0][7])):
+        usage[i] = 1
+    for element in lists[3]:
+        usage[int(element[1])] += 1
+    for element in lists[4]:
+        usage[int(element[1])] += 1
+    for i in range(len(usage)):
+        if usage[i] == 0:
+            print "UNALLOCATED INODE {0} NOT ON FREELIST".format(i)
+        elif usage[i] > 1:
+            print "ALLOCATED INODE {0} ON FREELIST".format(i)
+
 def main():
     if len(sys.argv) != 2:
         print >> sys.stderr, "Usage: python2 lab3b.py fs_report.csv"
@@ -173,6 +187,7 @@ def main():
     lists = parse_csv(fs_csv)
     reserved = check_invalid_blocks(lists)
     check_allocation(lists, reserved)
+    check_inode_allocation(lists)
 
 if __name__ == "__main__":
     main()
