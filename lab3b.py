@@ -73,22 +73,27 @@ def check_invalid_blocks(lists):
                     except KeyError:
                         print >> sys.stderr, "Error: Invalid indirection level"
                         sys.exit(1)
-    '''
-    for indirect in lists[6]:
-        if int(indirect[5]) > num_blocks:
-            try:
-                print "RESERVED {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirect[2]], indirect[5], indirect[1], indirect[3])
-            except KeyError:
-                print >> sys.stderr, "Error: Invalid indirection level"
-                sys.exit(1)
+    return reserved_blocks
 
-        if int(indirect[5]) > num_blocks:
-            try:
-                print "INVALID {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirect[2]], indirect[5], indirect[1], indirect[3])
-            except KeyError:
-                print >> sys.stderr, "Error: Invalid indirection level"
-                sys.exit(1)
-    '''
+def check_allocation(lists, reserved):
+    unreferenced = range(1, int(lists[0][0][1]))
+    for element in reserved:
+        unreferenced.remove(element)
+    free = []
+
+    for element in lists[2]:
+        unreferenced.remove(int(element[1]))
+        free.append(int(element[1]))
+    for element in lists[4]:
+        for i in range(12, len(element)):
+            if int(element[i]) == 0:
+                continue
+            if int(element[i]) in free:
+                print "ALLOCATED BLOCK {0} ON FREELIST".format(element[i])
+            else:
+                unreferenced.remove(int(element[i]))
+    for element in unreferenced:
+        print "UNREFERENCED BLOCK {0}".format(element)
 
 def main():
     if len(sys.argv) != 2:
@@ -96,7 +101,8 @@ def main():
         sys.exit(1)
     fs_csv = sys.argv[1]
     lists = parse_csv(fs_csv)
-    check_invalid_blocks(lists)
+    reserved = check_invalid_blocks(lists)
+    check_allocation(lists, reserved)
 
 if __name__ == "__main__":
     main()
