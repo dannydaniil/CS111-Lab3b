@@ -15,6 +15,7 @@ def parse_csv(fs_csv):
     lists = [[] for i in range(7)]
     with open(fs_csv, 'r') as csv:
         for line in csv:
+            line = line.replace('\n', '')
             summary_line = line.split(',')
             try:
                 index = indices[summary_line[0]]
