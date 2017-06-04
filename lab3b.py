@@ -194,6 +194,18 @@ def check_link_count(lists):
         if usage[int(element[1])] != int(element[6]):
             print "INODE {0} HAS {1} LINKS BUT LINKCOUNT IS {2}".format(element[1], usage[int(element[1])], element[6])
         
+def check_dirent_inodes(lists):
+    max_inode = lists[0][0][2]
+    free = []
+    for element in lists[3]:
+        free.append(int(element[1]))
+    for element in lists[5]:
+        as_int = int(element[3])
+        if as_int > max_inode:
+            print "DIRECTORY INODE {0} NAME {1} INVALID INODE {2}".format(element[1], element[6], element[3])
+        elif as_int in free:
+            print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[0], element[3])
+
 
 def main():
     if len(sys.argv) != 2:
@@ -205,6 +217,7 @@ def main():
     check_allocation(lists, reserved)
     check_inode_allocation(lists)
     check_link_count(lists)
+    check_dirent_inodes(lists)
 
 if __name__ == "__main__":
     main()
