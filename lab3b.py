@@ -177,9 +177,15 @@ def check_inode_allocation(lists):
         if i != 2:
             usage[i] = 1
     for element in lists[3]:
-        usage[int(element[1])] += 1
+        try:
+            usage[int(element[1])] += 1
+        except IndexError:
+            pass
     for element in lists[4]:
-        usage[int(element[1])] += 1
+        try:
+            usage[int(element[1])] += 1
+        except IndexError:
+            pass
     for i in range(len(usage)):
         if usage[i] == 0:
             print "UNALLOCATED INODE {0} NOT ON FREELIST".format(i)
@@ -189,10 +195,16 @@ def check_inode_allocation(lists):
 def check_link_count(lists):
     usage = [0 for i in range(int(lists[0][0][2]) + 1)]
     for element in lists[5]:
-        usage[int(element[3])] += 1
+        try:
+            usage[int(element[3])] += 1
+        except IndexError:
+            pass
     for element in lists[4]:
-        if usage[int(element[1])] != int(element[6]):
-            print "INODE {0} HAS {1} LINKS BUT LINKCOUNT IS {2}".format(element[1], usage[int(element[1])], element[6])
+        try:
+            if usage[int(element[1])] != int(element[6]):
+                print "INODE {0} HAS {1} LINKS BUT LINKCOUNT IS {2}".format(element[1], usage[int(element[1])], element[6])
+        except IndexError:
+            pass
         
 def check_dirent_inodes(lists):
     max_inode = lists[0][0][2]
