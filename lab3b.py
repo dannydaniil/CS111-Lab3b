@@ -68,12 +68,12 @@ def check_invalid_blocks(lists):
                     print "INVALID BLOCK {0} IN INODE {1} AT OFFSET {2}".format(inode[i], inode[1], i - 12)
                 else:
                     indirection_level = i - 23
-                try:
-                    print "INVALID {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirection_level], inode[i], inode[1], indirection_offset[indirection_level])
-                except KeyError:
-                    print >> sys.stderr, "Error: Invalid indirection level"
-                    sys.exit(1)
-'''
+                    try:
+                        print "INVALID {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirection_level], inode[i], inode[1], indirection_offset[indirection_level])
+                    except KeyError:
+                        print >> sys.stderr, "Error: Invalid indirection level"
+                        sys.exit(1)
+    '''
     for indirect in lists[6]:
         if int(indirect[5]) > num_blocks:
             try:
@@ -88,7 +88,7 @@ def check_invalid_blocks(lists):
             except KeyError:
                 print >> sys.stderr, "Error: Invalid indirection level"
                 sys.exit(1)
-'''
+    '''
 
 def main():
     if len(sys.argv) != 2:
