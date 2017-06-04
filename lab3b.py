@@ -107,12 +107,18 @@ def check_allocation(lists, reserved):
 
     unreferenced = range(1, int(lists[0][0][1]))
     for element in reserved:
-        unreferenced.remove(element)
+        try:
+            unreferenced.remove(element)
+        except ValueError:
+            pass
     free = []
     usage = [[0] for i in range(int(lists[0][0][1]))]
         
     for element in lists[2]:
-        unreferenced.remove(int(element[1]))
+        try:
+            unreferenced.remove(int(element[1]))
+        except ValueError:
+            pass
         free.append(int(element[1]))
     for element in lists[4]:
         for i in range(12, len(element)):
@@ -121,7 +127,10 @@ def check_allocation(lists, reserved):
             if int(element[i]) in free:
                 print "ALLOCATED BLOCK {0} ON FREELIST".format(element[i])
             else:
-                unreferenced.remove(int(element[i]))
+                try:
+                    unreferenced.remove(int(element[i]))
+                except ValueError:
+                    pass
             usage[int(element[i])][0] += 1
             if i < 24:
                 indirection = 0
@@ -138,7 +147,10 @@ def check_allocation(lists, reserved):
         if int(element[5]) in free:
             print "ALLOCATED BLOCK {0} ON FREELIST".format(element[5])
         else:
-            unreferenced.remove(int(element[5]))
+            try:
+                unreferenced.remove(int(element[5]))
+            except ValueError:
+                pass
         usage[int(element[5])][0] += 1
         usage[int(element[5])].append({
                 "indirection": int(element[2]),
