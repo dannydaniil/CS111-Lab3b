@@ -220,7 +220,8 @@ def check_dirent_inodes(lists):
         if as_int > max_inode:
             print "DIRECTORY INODE {0} NAME {1} INVALID INODE {2}".format(element[1], element[6], element[3])
         elif as_int in free:
-            print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[6], element[3])
+            if element[6] != "'.'" and element[6] != "'..'":
+                print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[6], element[3])
 
 def check_dots(lists):
     for element in lists[5]:
