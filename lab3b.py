@@ -207,7 +207,7 @@ def check_link_count(lists):
             pass
         
 def check_dirent_inodes(lists):
-    max_inode = lists[0][0][2]
+    max_inode = int(lists[0][0][2])
     free = []
     for element in lists[3]:
         free.append(int(element[1]))
