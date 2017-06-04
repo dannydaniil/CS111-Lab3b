@@ -73,6 +73,22 @@ def check_invalid_blocks(lists):
                     except KeyError:
                         print >> sys.stderr, "Error: Invalid indirection level"
                         sys.exit(1)
+
+    '''
+    for indirect in lists[6]:
+        if int(indirect[5]) > num_blocks:
+            try:
+                print "RESERVED {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirect[2]], indirect[5], indirect[1], indirect[3])
+            except KeyError:
+                print >> sys.stderr, "Error: Invalid indirection level"
+                sys.exit(1)
+         if int(indirect[5]) > num_blocks:
+            try:
+                print "INVALID {0} {1} IN INODE {2} AT OFFSET {3}".format(dict[indirect[2]], indirect[5], indirect[1], indirect[3])
+            except KeyError:
+                print >> sys.stderr, "Error: Invalid indirection level"
+                sys.exit(1)
+    '''
     return reserved_blocks
 
 def check_allocation(lists, reserved):
@@ -92,6 +108,11 @@ def check_allocation(lists, reserved):
                 print "ALLOCATED BLOCK {0} ON FREELIST".format(element[i])
             else:
                 unreferenced.remove(int(element[i]))
+    for element in lists[6]:
+        if int(element[5]) in free:
+            print "ALLOCATED BLOCK {0} ON FREELIST".format(element[5])
+        else:
+            unreferenced.remove(int(element[5]))
     for element in unreferenced:
         print "UNREFERENCED BLOCK {0}".format(element)
 
