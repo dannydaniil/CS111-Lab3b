@@ -174,7 +174,8 @@ def check_allocation(lists, reserved):
 def check_inode_allocation(lists):
     usage = [0 for i in range(int(lists[0][0][2]) + 1)]
     for i in range(int(lists[0][0][7])):
-        usage[i] = 1
+        if i != 2:
+            usage[i] = 1
     for element in lists[3]:
         usage[int(element[1])] += 1
     for element in lists[4]:
