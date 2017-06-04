@@ -136,7 +136,7 @@ def check_allocation(lists, reserved):
                 indirection = 0
                 offset = i - 12
             else:
-                indirection = i - 24
+                indirection = i - 23
                 offset = indirection_offset[indirection]
             usage[int(element[i])].append({
                     "indirection": indirection,
