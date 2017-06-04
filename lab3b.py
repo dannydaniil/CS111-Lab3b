@@ -43,7 +43,7 @@ def check_invalid_blocks(lists):
                 print "RESERVED BLOCK {0} IN INODE {1} AT OFFSET {2}".format(inode[i], inode[1], i - 12)
             if int(inode[i]) > num_blocks:
                 print "INVALID BLOCK {0} IN INODE {1} AT OFFSET {2}".format(inode[i], inode[1], i - 12)
-    
+
     dict = {
         1: "INDIRECT BLOCK",
         2: "DOUBLE INDIRECT BLOCK",
@@ -74,4 +74,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
