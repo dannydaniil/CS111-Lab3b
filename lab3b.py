@@ -27,6 +27,7 @@ def parse_csv(fs_csv):
                 lists[index].append(summary_line)
     except IOError:
         print >> sys.stderr, "Error: Non-existant file image {0}".format(fs_csv)
+        sys.exit(1)
     return lists
 
 def check_invalid_blocks(lists):
