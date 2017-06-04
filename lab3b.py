@@ -131,18 +131,24 @@ def check_allocation(lists, reserved):
                     unreferenced.remove(int(element[i]))
                 except ValueError:
                     pass
-            usage[int(element[i])][0] += 1
+            try:
+                usage[int(element[i])][0] += 1
+            except IndexError:
+                pass
             if i < 24:
                 indirection = 0
                 offset = i - 12
             else:
                 indirection = i - 23
                 offset = indirection_offset[indirection]
-            usage[int(element[i])].append({
-                    "indirection": indirection,
-                    "block_num": int(element[i]),
-                    "inode_num": int(element[1]),
-                    "offset": offset})
+            try:
+                usage[int(element[i])].append({
+                        "indirection": indirection,
+                        "block_num": int(element[i]),
+                        "inode_num": int(element[1]),
+                        "offset": offset})
+            except IndexError:
+                pass
     for element in lists[6]:
         if int(element[5]) in free:
             print "ALLOCATED BLOCK {0} ON FREELIST".format(element[5])
