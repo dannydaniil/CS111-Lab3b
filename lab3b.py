@@ -218,6 +218,18 @@ def check_dirent_inodes(lists):
         elif as_int in free:
             print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[0], element[3])
 
+def check_dots(lists):
+    for element in lists[5]:
+        if element[6] == "'.'":
+            if element[1] != element[3]:
+                print "DIRECTORY INODE {0} NAME {1} LINK TO INODE {2} SHOULD BE {3}".format(element[1], element[6], element[3], element[1])
+        elif element[6] == "'..'":
+            for parent in lists[5]:
+                if parent[6] == "'.'" or parent[6] == "'..'":
+                    continue
+                if parent[3] == element[1]:
+                    if element[3] != parent[1]:
+                        print "DIRECTORY INODE {0} NAME {1} LINK TO INODE {2} SHOULD BE {3}".format(element[1], element[6], element[3], parent[1])
 
 def main():
     if len(sys.argv) != 2:
@@ -230,6 +242,7 @@ def main():
     check_inode_allocation(lists)
     check_link_count(lists)
     check_dirent_inodes(lists)
+    check_dots(lists)
 
 if __name__ == "__main__":
     main()
