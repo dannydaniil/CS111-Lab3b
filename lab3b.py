@@ -224,6 +224,9 @@ def check_dots(lists):
             if element[1] != element[3]:
                 print "DIRECTORY INODE {0} NAME {1} LINK TO INODE {2} SHOULD BE {3}".format(element[1], element[6], element[3], element[1])
         elif element[6] == "'..'":
+            if element[1] == '2':
+                if element[3] != '2':
+                    print "DIRECTORY INODE {0} NAME {1} LINK TO INODE {2} SHOULD BE {3}".format(element[1], element[6], element[3], parent[1])                    
             for parent in lists[5]:
                 if parent[6] == "'.'" or parent[6] == "'..'":
                     continue
