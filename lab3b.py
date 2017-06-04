@@ -13,17 +13,20 @@ def parse_csv(fs_csv):
         "INDIRECT": 6
     }
     lists = [[] for i in range(7)]
-    with open(fs_csv, 'r') as csv:
-        for line in csv:
-            line = line.replace('\n', '')
-            summary_line = line.split(',')
-            try:
-                index = indices[summary_line[0]]
-            except KeyError:
-                print >> sys.stderr, "{0} {1}".format("Error: Invalid first entry:",
-                        summary_line[0])
-                sys.exit(1)
-            lists[index].append(summary_line)
+    try:
+        with open(fs_csv, 'r') as csv:
+            for line in csv:
+                line = line.replace('\n', '')
+                summary_line = line.split(',')
+                try:
+                    index = indices[summary_line[0]]
+                except KeyError:
+                    print >> sys.stderr, "{0} {1}".format("Error: Invalid first entry:",
+                            summary_line[0])
+                    sys.exit(1)
+                lists[index].append(summary_line)
+    except IOError:
+        print >> sys.stderr, "Error: Non-existant file image {0}".format(fs_csv)
     return lists
 
 def check_invalid_blocks(lists):
@@ -216,7 +219,7 @@ def check_dirent_inodes(lists):
         if as_int > max_inode:
             print "DIRECTORY INODE {0} NAME {1} INVALID INODE {2}".format(element[1], element[6], element[3])
         elif as_int in free:
-            print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[0], element[3])
+            print "DIRECTORY INODE {0} NAME {1} UNALLOCATED INODE {2}".format(element[1], element[6], element[3])
 
 def check_dots(lists):
     for element in lists[5]:
