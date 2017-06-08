@@ -3,3 +3,33 @@ UID: 504636684; 304464688
 EMAIL: dannyd1997@g.ucla.edu; richardyu123@g.ucla.edu
 
 slip days used: 3
+
+Our project successfully passes the sanity
+script provided on the specification for the project.
+
+We chose to use python2 as the programming language to
+keep our source code short and for easier manipulation
+of the contents of the file provided as the argument.
+
+lab3b:
+A shell script that is used to run lab3b.py which
+is our source code file. Script lab3b simply passes
+the argument provided to the python source file
+which produces the required results.
+
+lab3b.py:
+
+
+
+Makefile:
+contains the three specified commands, make, make clean
+and make dist. The make command simply gives execution
+permission to the two scripts lab3b lab3b.py . There is
+nothing produce during the make command, therefore the clean
+command does not remove any file. Finally, the dist command
+create the tar that contains the project's files.
+
+
+README:
+contains a description for each included file in our
+submission.
