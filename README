@@ -19,7 +19,14 @@ which produces the required results.
 
 lab3b.py:
 
-
+Contains the implementation for project 3b. It takes an input of
+a csv file that describes a file system and outputs to standard output
+an audit describing errors within the data in the csv file. The program begins
+by parsing through the csv file and creating a three-dimensional list to
+describe the data in the csv. We then look through the lists to check block
+consistency, inode allocation, and directory consistency. Any errors that we
+find in the file system summary is output to stdout in the format described
+in the project specifications.
 
 Makefile:
 contains the three specified commands, make, make clean
